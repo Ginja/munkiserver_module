@@ -1,0 +1,10 @@
+##########################################
+# Managed by Puppet - munkiserver_module #
+##########################################
+
+<% if @macosx_productname == 'Mac OS X Server' %>
+LoadModule ssl_module libexec/apache2/mod_ssl.so
+<% end %>
+LoadModule passenger_module <%= @pass_path %>/ext/apache2/mod_passenger.so
+PassengerRoot  <%= @pass_path %>
+PassengerRuby  <%= @user_path %>/.rvm/wrappers/ruby-1.9.3-p0/ruby

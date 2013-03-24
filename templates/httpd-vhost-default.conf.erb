@@ -1,0 +1,9 @@
+##########################################
+# Managed by Puppet - munkiserver_module #
+##########################################
+
+NameVirtualHost *:80
+<VirtualHost *:80> 
+  ServerName <%= svr_name %> 
+  Redirect permanent / https://<%= svr_name %>/
+</VirtualHost>

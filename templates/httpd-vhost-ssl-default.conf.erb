@@ -1,0 +1,29 @@
+##########################################
+# Managed by Puppet - munkiserver_module #
+##########################################
+
+Listen <%= @port %>
+NameVirtualHost *:<%= @port %>
+<VirtualHost <%= @vhost %>:<%= @port %>>
+  ServerName <%= @svr_name %>
+  DocumentRoot "<%= @public_dir %>"
+  
+  LoadModule xsendfile_module   /usr/libexec/apache2/mod_xsendfile.so
+  RequestHeader Set X-Sendfile-Type X-Sendfile
+  ProxyPassReverse / http://localhost:8001/
+  XSendFile on
+  XSendFilePath <%= @pkg_store %>
+
+  SSLEngine on
+  #Self Signed certificates
+  SSLCertificateFile <%= @ssl_cert %>
+  SSLCertificateKeyFile <%= @ssl_key %> 
+  SSLCertificateChainFile <%= @ssl_chain %> 
+
+  <Directory "<%= @public_dir %>">
+    AllowOverride All
+    Order allow,deny
+    allow from all
+  </Directory>
+</VirtualHost>
+
