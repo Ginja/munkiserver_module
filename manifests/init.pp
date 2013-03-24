@@ -1,17 +1,16 @@
 # == Class: munkiserver_module
 #
 # This module will install and configure a munkiserver app instance. You need to do several things before you use it:
-#	Install bjoernalbers-homebrew module (on puppet master or locally if you're applying this module locally.)
-#	Install XCode on your target machine
-#	Create an SSL key, chain, and cert on target machine (preferably key un-encrypted, otherwise you'll need to enter your
-#	passphrase everytime apache is restarted)
+#	Install bjoernalbers-homebrew module (on your puppet master or locally if you're using a local manifest.)
+#	Create an SSL key, chain, and cert on target machine (preferably with the key un-encrypted, otherwise you'll need to enter your passphrase everytime apache is restarted)
+# Install the XCode Command Line Tools on your target machine (optional)
 #
 # === Parameters
 #
 # [*app_pass*]
-#   The password for the root user of the munkiserver app. Must be between 5-24 characters. This can be changed via the app GUI afterwards.
+#   The password that will be set for the root user of the munkiserver app. Must be between 5-24 characters. This can be changed via the app GUI afterwards.
 # [*db_pass*]
-#   The password for the local mysql munkiserver db user. If you will be managing the state of your server with this puppet module afterwards, this cannot be changed once set.
+#   The password that will be set for the local mysql munkiserver db user. If you will be managing the state of your server with this puppet module afterwards, this cannot be changed once set.
 # [*apache*]
 #   Boolean flag to specify whether or not to use apache/passenger to handle https requests. If you specify true ensure you declare a munkiserver_module::vhost resource.
 # [*user*]
@@ -19,7 +18,7 @@
 # [*path*]
 #    The path where the munkiserver app will be downloaded. Defaults to '/Library/WebServer/Documents'.
 # [*munkitools*]
-#    Download location for munkitools. If you specify your own location make sure it's a dmg. Defaults to the latest version at this time 'http://munki.googlecode.com/files/munkitools-0.8.3.1679.0.dmg'.
+#    Download location for munkitools. If you specify your own location make sure it's a dmg. Defaults to the latest stable version at this time 'http://munki.googlecode.com/files/munkitools-0.8.3.1679.0.dmg'.
 # [*xquartz*]
 #    Download location for XQuartz. If you specify your own location make sure it's a dmg. Defaults to the latest version at this time 'http://xquartz.macosforge.org/downloads/SL/XQuartz-2.7.4.dmg'.
 # [*gcc*]
