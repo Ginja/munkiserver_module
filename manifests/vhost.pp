@@ -21,7 +21,7 @@
 # [*svr_name*]
 #   The DNS name you want your munkiserver application to respond to. This defaults to the FQDN of the machine.
 # [*redirect_http*]
-#   Whether or not to redirect all http traffic to https on target node. Defaults to 'false'.
+#   Whether or not you want to redirect all http traffic to the server to the munkiserver application. Defaults to 'false'.
 #
 # === Examples
 #

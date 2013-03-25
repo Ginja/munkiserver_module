@@ -13,7 +13,7 @@ class munkiserver_module::app_setup {
   exec { 'git-cloning':
     command => "/usr/bin/sudo -u ${munkiserver_module::user} -H bash -c \"/usr/local/bin/git clone --progress git://github.com/jnraine/munkiserver.git &> /tmp/munkiserver/2_1_app_setup-git-cloning.log\"",
     cwd     => $munkiserver_module::path,
-    timeout     => 0,
+    timeout => 0,
     creates => $app_path,
   }
 

@@ -1,38 +1,38 @@
 # == Class: munkiserver_module
 #
 # This module will install and configure a munkiserver app instance. You need to do several things before you use it:
-#	Install bjoernalbers-homebrew module (on your puppet master or locally if you're using a local manifest.)
-#	Create an SSL key, chain, and cert on target machine (preferably with the key un-encrypted, otherwise you'll need to enter your passphrase everytime apache is restarted)
+# Install bjoernalbers-homebrew module (on your puppet master or locally if you're using a local manifest.)
+# Create an SSL key, chain, and cert on target machine (preferably with the key un-encrypted, otherwise you'll need to enter your passphrase everytime apache is restarted)
 # Install the XCode Command Line Tools on your target machine (optional)
 #
 # === Parameters
 #
 # [*app_pass*]
-#   The password that will be set for the root user of the munkiserver app. Must be between 5-24 characters. This can be changed via the app GUI afterwards.
+#   The password that will be set for the root user of the munkiserver app. Must be between 5-24 characters. This can be changed via the application GUI afterwards.
 # [*db_pass*]
-#   The password that will be set for the local mysql munkiserver db user. If you will be managing the state of your server with this puppet module afterwards, this cannot be changed once set.
+#   The password that will be set for the mysql database user. If you will be managing the state of your server with this puppet module afterwards, this cannot be changed once set.
 # [*apache*]
 #   Boolean flag to specify whether or not to use apache/passenger to handle https requests. If you specify true ensure you declare a munkiserver_module::vhost resource.
 # [*user*]
-#    The local system user that the app will be configured under. It's best to specify a new user. Defaults to 'munkiserver'.
+#   This will be the local user that the application is configured under. If the user does not exist the module will create it (recommended). If the module creates a local user there will be no password for the account. To become the user you'll need to su to it from root. The default value is 'munkiserver'.
 # [*path*]
-#    The path where the munkiserver app will be downloaded. Defaults to '/Library/WebServer/Documents'.
+#   The path where the munkiserver app will be downloaded. Defaults to '/Library/WebServer/Documents'.
 # [*munkitools*]
-#    Download location for munkitools. If you specify your own location make sure it's a dmg. Defaults to the latest stable version at this time 'http://munki.googlecode.com/files/munkitools-0.8.3.1679.0.dmg'.
+#   Download location for munkitools. If you specify your own location make sure it's a dmg. Defaults to the latest stable version at this time 'http://munki.googlecode.com/files/munkitools-0.8.3.1679.0.dmg'.
 # [*xquartz*]
-#    Download location for XQuartz. If you specify your own location make sure it's a dmg. Defaults to the latest version at this time 'http://xquartz.macosforge.org/downloads/SL/XQuartz-2.7.4.dmg'.
+#   Download location for XQuartz. If you specify your own location make sure it's a dmg. Defaults to the latest version at this time 'http://xquartz.macosforge.org/downloads/SL/XQuartz-2.7.4.dmg'.
 # [*gcc*]
-#    Download location for the gcc compiler. If you specify your own location make sure it's a pkg. Defaults to the appropiate package for your Mac OS X version.
+#   Download location for the gcc compiler. Will only be installed if the XCode Command Line Tools haven't been. If you specify your own location make sure it's a pkg. Defaults to the appropiate package for your Mac OS X version (should never need to set this, unless the download location changes).
 # [*adapter*]
-#    The db adapter to use for the munkiserver app. Change at your own risk. Defaults to 'mysql2'.
+#   The db adapter to use for the munkiserver app. Change at your own risk. Defaults to 'mysql2'.
 # [*db_host*]
 #   The host of the mysql db. Defaults to 'localhost'.
 # [*db_name*]
-#   The name of the local mysql db to create for the munkiserver app. Defaults to 'munkiserver'.
+#   The name of the mysql database that will be created and used for the munkiserver application. Defaults to 'munkiserver'.
 # [*db_user*]
-#   The name of the local mysql db user that the munkiserver app uses. Defaults to 'munki'.
+#   The name of the mysql user that the application will create and use. Defaults to 'munki'.
 # [*passenger_vers*]
-#   The version of Phusion Passenger you want to install. You can only use this parameter if apache is set to true and you can only specify stable versions. Defaults to '3.0.19'.
+#   The version of Phusion Passenger you want to install. This parameter will only be taken into consideration if the apache parameter is set to true. You can also only specify stable versions. Defaults to the latest stable version at this time, '3.0.19'.
 #
 # === Examples
 #
@@ -89,7 +89,7 @@ class munkiserver_module ( $app_pass,
   if $::has_compiler == nil {
     fail('It appears there is no Homebrew module, please install one - EX: puppet module install bjoernalbers-homebrew ')
   }
-  
+
   # Create a nice tmp directory to store all the logs generated by this module's resource types
   file { 'tmp-directory':
     path   => '/tmp/munkiserver',
